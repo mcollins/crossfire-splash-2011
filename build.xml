@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<project name="crossfire-splash-2011" default="pdf" basedir=".">
+
+    <property name="ltx2.file" value="${basedir}/${ant.project.name}.tex"/>
+    <property name="cls.file" value="sigplanconf.cls"/>
+    <property name="build.dir" value="build/"/>
+
+    <taskdef name="latex" classname="de.dokutransdata.antlatex.LaTeX"
+          classpath="lib/ant_latex_0.0.9_1.jar"/>
+
+    <target name="pdf" depends="prepare">
+
+        <latex
+            latexfile="${ltx2.file}"
+            verbose="on"
+            clean="on"
+            pdftex="on"
+            workingDir="${build.dir}"
+            outputDir="${basedir}"
+          />
+
+        <copy file="${build.dir}/${ant.project.name}.pdf"
+                   tofile="${ant.project.name}.pdf"/>
+    </target>
+
+    <target name="prepare">
+        <mkdir dir="${build.dir}"/>
+        <copy todir="${build.dir}">
+               <fileset dir="${basedir}" includes="${cls.file}"/>
+               <fileset dir="${basedir}" includes="*.bib"/>
+               <fileset dir="${basedir}" includes="*.tex"/>
+        </copy>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+</project>
