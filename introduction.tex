@@ -1,4 +1,4 @@
-
+\begin{introduction}
 \section{Introduction}
 Web Applications continue to grow in size and complexity. The
 emergence of common toolkits and libraries for Javascript along with performance
@@ -12,7 +12,7 @@ Sophisticated development tools become crucial for understanding
 and working with larger codebases. Compilers, debuggers, and other tools are
 often combined to create an Integrated Development Environment (IDE) where
 most, if not all, development tasks can be performed. Web development tools, on
-the other hand, often reside in the Web Browser. In 2011, all of the major Web
+the other hand, often reside in the Web Browser. In 2011, most Web
 browsers ship with some kind of Web development tools included\cite{something},
 and still more are available as plugins or add-ons. These tools operate
 directly on the runtime Web application that is loaded into the browser, and do
@@ -20,9 +20,21 @@ not retain any knowledge of or connection to the original source code. Therefore
 a developer must manually apply any changes made in one of these tools to his or
 her source code.
 
+This class of built-in Web development tools allow for a powerful set of
+features.  However, several weaknesses.
+
+Tools such as ``Inspectors'' and Firebug's HTML Breakpoints\cite{jjb-www2010}
+enable developers to quickly locate the section of code they are interested in.
+
 The rise of Mobile and Tablet computers which ship with fully functional Web
 browsers means that Web application developers have additional form-factors to
 consider.
 
 Tools such as ``Inspectors'' and Firebug's HTML Breakpoints\cite{jjb-www2010}
 enable developers to quickly locate the section of code they are interested in.
+
+Crossfire is designed to support the features available in current built-in
+development tools such as Firebug, while enabling the advantages of a remote
+debug connection.
+
+\end{introduction}
