@@ -38,10 +38,20 @@ DragonFly for Opera, Web Inspector for Google Chrome and Apple Safari, and the d
 Microsoft Internet Explorer. Since 2007 Firebug has been developed as an open source project, with 
 seven major releases.
 
-To give a flavor of the kinds of operations Firebug supports, we outline two examples more completely
-described in Ref.\cite{jjb-www2010}. First suppose a developer wants to understand why a block of text 
-in the Web page turned green while the page was loading. More. 
+To give a flavor of the kinds of operations Firebug supports, we outline  an example more completely
+described in Ref.\cite{jjb-www2010}. Suppose a developer wants to understand why a block of text 
+in the Web page turned green while the page was loading. They might use the Firebug "inspect" feature, 
+causing Firebug to display the HTML element under the mouse. They see that the element has a \textit{style}
+attribute setting the color green. While hovering over the green block of text, 
+the developer clicks down to lock
+the user interface on the element, then moves to the HTML panel in Firebug and right clicks on the 
+selected HTML element representation. A menu pops up allowing the developer to select "Break On Attribute Change". 
+When the developer reloads the page, Firebug halts in the JavaScript code panel, on the line where 
+the attribute is changed from red to green.
 
-Second, 
+This example illustrates that we will need to synchronize mouse events on the Web page with the debugger UI,
+identify HTML element representations rendered in the debugger UI with the elements in the Web page and synchronize
+DOM mutation event handling wit JavaScript execution.
+
 
 (Refactoring timeline)
