@@ -1,28 +1,47 @@
 
 \section{Introduction}
-Web Applications continue to grow in size and complexity. The
-emergence of common toolkits and libraries for Javascript along with performance
-increases in Web Browsers fuels growth in client-side Web application
-development. As more functionality shifts from server- to client-side, the size
-of Javascript codebases naturally increases. Unfortunately for developers, the
-tools to develop, manage, and debug larger codebases have not followed the
-applications into the Web application development space.
+Web Applications continue to grow in size and complexity. Asynchronous background 
+data download (AJAX) started the surge. 
+This led to the 
+emergence of common toolkits and libraries for Javascript which drove  performance
+increases in Web Browsers fueling more growth in client-side Web application
+development. These improvements, combined with new features available in Web browsers 
+shifted investment from server- to client-side. Recent empirical analysis of representative
+ major Web sites shows program sizes in the range of hundreds of kilobytes of
+sophisticated code.\cite{VitekDynamicJS2010}
 
-Sophisticated development tools become crucial for understanding
-and working with larger codebases. Compilers, debuggers, and other tools are
-often combined to create an Integrated Development Environment (IDE) where
-most, if not all, development tasks can be performed. Web development tools, on
-the other hand, often reside in the Web Browser. In 2011, all of the major Web
-browsers ship with some kind of Web development tools included\cite{something},
-and still more are available as plugins or add-ons. These tools operate
-directly on the runtime Web application that is loaded into the browser, and do
-not retain any knowledge of or connection to the original source code. Therefore
-a developer must manually apply any changes made in one of these tools to his or
-her source code.
+To develop and maintain these large applications, programmers and designers rely on 
+numerous tools, most notably Web page debuggers. 
+This paper describes a major re-architecting of the most widely used Web page debugger, 
+Firebug, as a client/server system and in particular the 
+\textit{Crossfire} protocol designed to support its client-server communications.  
+Our description focuses on practical, state-of-the-art issues in an on-going and fast-moving project. 
+Thus we cover details of protocol important for implementation and issues of 
+matching resources to goals important for project management: we must deal with both 
+extremes to succeed.
 
-The rise of Mobile and Tablet computers which ship with fully functional Web
-browsers means that Web application developers have additional form-factors to
-consider.
+\section{Background}
+To understand the importance and challenges of the \textit{Crossfire} work we start by introducing Firebug.
+Released by Joe Hewitt in 2006, Firebug was the first integrated Web debugger. Firebug is a runtime 
+debugger: it directly accesses, responds to, and operates on the running Web browser.  Rather than separate 
+views of JavaScript, CSS, and HTML, Firebug integrated its views such that interaction with, 
+for example, an HTML element would cause synchronized views of the CSS rules. Rather than static 
+ views of browser state, Firebug included dynamics like network traffic analysis and console logging; rather 
+than read-only views, Firebug allowed live edits where possible so developers could try out changes.
+The resulting tool became very popular with developers and contributing significantly to the growth in Web applications.
 
-Tools such as ``Inspectors'' and Firebug's HTML Breakpoints\cite{jjb-www2010}
-enable developers to quickly locate the section of code they are interested in.
+The primary implementation of Firebug is a Firefox extensions, a supplemental software 
+component that loads into the Firefox Web browser. A secondard implementation with fewer features and, 
+in particular, limited support for JavaScript debugging, called Firebug Lite works in multiple browsers. 
+The success of Firebug lead to implemenations of Web Page debuggers in other browsers, including 
+DragonFly for Opera, Web Inspector for Google Chrome and Apple Safari, and the developer tool in 
+Microsoft Internet Explorer. Since 2007 Firebug has been developed as an open source project, with 
+seven major releases.
+
+To give a flavor of the kinds of operations Firebug supports, we outline two examples more completely
+described in Ref.\cite{jjb-www2010}. First suppose a developer wants to understand why a block of text 
+in the Web page turned green while the page was loading. More. 
+
+Second, 
+
+(Refactoring timeline)
