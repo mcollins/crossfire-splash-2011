@@ -53,6 +53,24 @@ connection used for the handshake. A client may also begin sending requests to
 the server using the same connection.
 
 \subsection {Extensibility}
+One of the goals of Crossfire is to support remote and multi-process versions of
+Firebug. One of Firebug's features is its ability to be extended, and there are
+already many existing extensions. Therefore, we have developed what an API for
+Crossfire, called the ``Crossfire Tools API''. The Tools API allows Firebug
+extension developers a clean and consistent way to access the Crossfire client
+and/or server connection.
+
+On the server-side, the Tools API allows an extension to send custom events
+and handle custom requests using Crossfire's connection and transport mechanism.
+A client extension can listen for these events and respond to the requests.
+Using this API, it will be possible for Firebug extensions to continue to adapt
+to architectural changes in future versions of Firebug.
+
+One consequence of this design choice is that the set of possible commands or
+event names cannot be specified definitively by the protocol. A Crossfire
+client or server must therefore be able to accept and respond to any well-formed
+message packet, even if it may not how to handle a particular command or event
+type.
 
 \subsection {Contexts}
 A context in Firebug represents a single Web page.
