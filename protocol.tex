@@ -3,10 +3,10 @@
 The CrossFire protocol is an asynchronous, bi-directional protocol designed to
 enable the full functionality of the Firebug debugger in a multi-process or
 remote scenario. Where it was possible, the design of the protocol took cues
-from existing debug protocols () , as well as common Web
-technologies (e.g. HTTP\cite{http}, JSON\cite{json}). However certain features unique to Firebug
-and to debugging code running inside a Web Browser must be taken into account
-in the design of the protocol.
+from existing debug protocols () , as well as common Web technologies (e.g.
+HTTP\cite{http}, JSON\cite{json}). However certain features unique to Firebug
+and to debugging code running inside a Web Browser must be taken into account in
+the design of the protocol.
 
 Implementations of the protocol differ based on whether the implementation is
 intended to operate as a client or server. A CrossFire server resides in or is
@@ -73,7 +73,8 @@ message packet, even if it may not how to handle a particular command or event
 type.
 
 \subsection {Contexts}
-A context in Firebug represents a single Web page.
+Firebug represents an instance of a Web page being debugged and shares
+information about the page via an object called a \textit{Context}.
 
 \subsection {Breakpoints}
 Breakpoint debugging is a standard tool for debugging software at runtime in
@@ -81,3 +82,5 @@ many languages and environments. The Web Browser environment creates several
 challenges for designing a remote protocol which supports breakpoint debugging.
 Firebug also introduces several types of breakpoints which are not present in
 other environments \cite{jjb-www2010}
+
+\subsection {Context-specific data}

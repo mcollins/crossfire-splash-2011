@@ -1,15 +1,32 @@
 
 \section{Related Work}
-\subsection{GDB}
-
-\subsection{JNDI/JDWP}
-
-\subsection{DBGP}
-
-\subsection{Opera Scope}
-Opera Scope Protocol \cite{opera-scope}
-
-\subsection{V8 / Chrome Dev Tools}
-
-\subsection{wienre}
+\subsection{Web Development Tools}
+\subsubsection{Internet Explorer}
+\subsubsection{Chrome Dev Tools}
+\subsubsection{Wienre}
+\subsubsection{Eclipse JSDI}
+\subsubsection{Orion}
+\subsection{Remote Protocols}
+Many protocols have already been designed for the purposes of remotely debugging
+an application running in another process, virtual machine, host, etc. The GNU
+GDB debugger has an associated Remote Serial Protocol (RSP)\cite{gdb-rsp}. While
+it is the only debugger we know of with its own song \cite{gdb-song}, it is
+primarily designed for debugging code running on embedded systems, and would not be
+well-suited for use with Firebug.
+\subsubsection{JNDI/JDWP}
+Java does remote debugging too.
+\subsubsection{DBGp}
+DBGp\cite{dbgp}, is an acronym for Debug Protocol, and was developed for version
+2 of the XDebug debugger for the PHP language. Although it was designed not to
+be language specific, many of the commands are intended to be synchronous, as
+opposed to the asynchronous nature of Crossfire. DBGp also allows for the
+debugger engine to send an event to a client via the 'notification' element,
+with a custom body. However in order to support Firebug, we would need to define
+the same events defined by Crossfire as DBGp notifications.
+\subsubsection{Opera Scope Protocol}
+The Opera browser has a built-in Web development tool called DragonFly,
+which also supports the Scope remote debug protocol. The Scope protocol supports
+XML and JSON formats, and features such as JavaScript debugging and remote DOM
+inspection.
+\cite{opera-scope}
 

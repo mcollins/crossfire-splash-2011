@@ -1,61 +1,68 @@
 
 \section{Introduction}
-Web Applications continue to grow in size and complexity. Asynchronous background 
-data download (AJAX) started the surge. 
-This led to the 
-emergence of common toolkits and libraries for Javascript which drove  performance
-increases in Web Browsers fueling more growth in client-side Web application
-development. These improvements, combined with new features available in Web browsers 
-shifted investment from server- to client-side. Recent empirical analysis of representative
+Web Applications continue to grow in size and complexity. Asynchronous
+background data download (AJAX) started the surge. This led to the emergence of
+common toolkits and libraries for Javascript which drove  performance increases
+in Web Browsers fueling more growth in client-side Web application development.
+These improvements, combined with new features available in Web browsers shifted
+investment from server- to client-side. Recent empirical analysis of
+representative
  major Web sites shows program sizes in the range of hundreds of kilobytes of
 sophisticated code.\cite{VitekDynamicJS2010}
 
-To develop and maintain these large applications, programmers and designers rely on 
-numerous tools, most notably Web page debuggers. 
-This paper describes a major re-architecting of the most widely used Web page debugger, 
-Firebug, as a client/server system and in particular the 
-\textit{Crossfire} protocol designed to support its client-server communications.  
-Our description focuses on practical, state-of-the-art issues in an on-going and fast-moving project. 
-Thus we cover details of protocol important for implementation and issues of 
-matching resources to goals important for project management: we must deal with both 
+To develop and maintain these large applications, programmers and designers rely
+on numerous tools, most notably Web page debuggers. This paper describes a major
+re-architecting of the most widely used Web page debugger, Firebug, as a
+client/server system and in particular the \textit{Crossfire} protocol designed
+to support its client-server communications. Our description focuses on
+practical, state-of-the-art issues in an on-going and fast-moving project. Thus
+we cover details of protocol important for implementation and issues of matching
+resources to goals important for project management: we must deal with both
 extremes to succeed.
 
 \section{Background}
-To understand the importance and challenges of the \textit{Crossfire} work we start by introducing Firebug.
-Released by Joe Hewitt in 2006, Firebug was the first integrated Web debugger. Firebug is a runtime 
-debugger: it directly accesses, responds to, and operates on the running Web browser.  Rather than separate 
-views of JavaScript, CSS, and HTML, Firebug integrated its views such that interaction with, 
-for example, an HTML element would cause synchronized views of the CSS rules. Rather than static 
- views of browser state, Firebug included dynamics like network traffic analysis and console logging; rather 
-than read-only views, Firebug allowed live edits where possible so developers could try out changes.
-The resulting tool became very popular with developers and contributing significantly to the growth in Web applications.
+To understand the importance and challenges of the \textit{Crossfire} work we
+start by introducing Firebug. Released by Joe Hewitt in 2006, Firebug was the
+first integrated Web debugger. Firebug is a runtime debugger: it directly
+accesses, responds to, and operates on the running Web browser.  Rather than
+separate views of JavaScript, CSS, and HTML, Firebug integrated its views such
+that interaction with, for example, an HTML element would cause synchronized
+views of the CSS rules. Rather than static
+ views of browser state, Firebug included dynamics like network traffic analysis
+ and console logging; rather
+than read-only views, Firebug allowed live edits where possible so developers
+could try out changes. The resulting tool became very popular with developers
+and contributing significantly to the growth in Web applications.
 
-The primary implementation of Firebug is a Firefox extensions, a supplemental software 
-component that loads into the Firefox Web browser. A secondard implementation with fewer features and, 
-in particular, limited support for JavaScript debugging, called Firebug Lite works in multiple browsers. 
-The success of Firebug lead to implemenations of Web Page debuggers in other browsers, including 
-DragonFly for Opera, Web Inspector for Google Chrome and Apple Safari, and the developer tool in 
-Microsoft Internet Explorer. Since 2007 Firebug has been developed as an open source project, with 
-seven major releases.
+The primary implementation of Firebug is a Firefox extensions, a supplemental
+software component that loads into the Firefox Web browser. A secondard
+implementation with fewer features and, in particular, limited support for
+JavaScript debugging, called Firebug Lite works in multiple browsers. The
+success of Firebug lead to implemenations of Web Page debuggers in other
+browsers, including DragonFly for Opera, Web Inspector for Google Chrome and
+Apple Safari, and the developer tool in Microsoft Internet Explorer. Since 2007
+Firebug has been developed as an open source project, with seven major releases.
 
-To give a flavor of the kinds of operations Firebug supports, we outline  an example more completely
-described in Ref.\cite{jjb-www2010}. Suppose a developer wants to understand why a block of text 
-in the Web page turned green while the page was loading. They might use the Firebug "inspect" feature, 
-causing Firebug to display the HTML element under the mouse. They see that the element has a \textit{style}
-attribute setting the color green. While hovering over the green block of text, 
-the developer clicks down to lock
-the user interface on the element, then moves to the HTML panel in Firebug and right clicks on the 
-selected HTML element representation. A menu pops up allowing the developer to select "Break On Attribute Change". 
-When the developer reloads the page, Firebug halts in the JavaScript code panel, on the line where 
-the attribute is changed from red to green.
+To give a flavor of the kinds of operations Firebug supports, we outline  an
+example more completely described in Ref.\cite{jjb-www2010}. Suppose a developer
+wants to understand why a block of text in the Web page turned green while the
+page was loading. They might use the Firebug "inspect" feature, causing Firebug
+to display the HTML element under the mouse. They see that the element has a
+\textit{style} attribute setting the color green. While hovering over the green
+block of text, the developer clicks down to lock the user interface on the
+element, then moves to the HTML panel in Firebug and right clicks on the
+selected HTML element representation. A menu pops up allowing the developer to
+select "Break On Attribute Change". When the developer reloads the page, Firebug
+halts in the JavaScript code panel, on the line where the attribute is changed
+from red to green.
 
-This example illustrates that we will need to synchronize mouse events on the Web page with the debugger UI,
-identify HTML element representations rendered in the debugger UI with the elements in the Web page and synchronize
-DOM mutation event handling wit JavaScript execution.
+This example illustrates that we will need to synchronize mouse events on the
+Web page with the debugger UI, identify HTML element representations rendered in
+the debugger UI with the elements in the Web page and synchronize DOM mutation
+event handling wit JavaScript execution.
 
 
 (Refactoring timeline)
-=======
 Web Applications continue to grow in size and complexity. The
 emergence of common toolkits and libraries for Javascript along with performance
 increases in Web Browsers fuels growth in client-side Web application

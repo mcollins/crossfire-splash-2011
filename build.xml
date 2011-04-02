@@ -8,7 +8,7 @@
     <taskdef name="latex" classname="de.dokutransdata.antlatex.LaTeX"
           classpath="lib/ant_latex_0.0.9_1.jar"/>
 
-    <target name="pdf" depends="prepare">
+    <target name="pdf" depends="clean,prepare">
 
         <latex
             latexfile="${ltx2.file}"
@@ -29,6 +29,9 @@
                <fileset dir="${basedir}" includes="${cls.file}"/>
                <fileset dir="${basedir}" includes="*.bib"/>
                <fileset dir="${basedir}" includes="*.tex"/>
+        </copy>
+        <copy todir="${build.dir}/figures">
+            <fileset dir="${basedir}/figures" includes="*.png,*.jpg,*.gif"/>
         </copy>
     </target>
 
