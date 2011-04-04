@@ -15,10 +15,10 @@ on numerous tools, most notably Web page debuggers. This paper describes a major
 re-architecting of the most widely used Web page debugger, Firebug, as a
 client/server system and in particular the \textit{Crossfire} protocol designed
 to support its client-server communications. Our description focuses on
-practical, state-of-the-art issues in an on-going and fast-moving project. Thus
+practical, state-of-the-art issues in an on-going, fast-moving, open-source project. Thus
 we cover details of protocol important for implementation and issues of matching
 resources to goals important for project management: we must deal with both
-extremes to succeed.
+low and high level issues to succeed.
 
 \section{Background}
 To understand the importance and challenges of the \textit{Crossfire} work we
@@ -37,7 +37,7 @@ and contributing significantly to the growth in Web applications.
 The primary implementation of Firebug is a Firefox extensions, a supplemental
 software component that loads into the Firefox Web browser. A secondard
 implementation with fewer features and, in particular, limited support for
-JavaScript debugging, called Firebug Lite works in multiple browsers. The
+JavaScript debugging, called Firebug Lite, works in multiple browsers. The
 success of Firebug lead to implemenations of Web Page debuggers in other
 browsers, including DragonFly for Opera, Web Inspector for Google Chrome and
 Apple Safari, and the developer tool in Microsoft Internet Explorer. Since 2007
@@ -50,7 +50,7 @@ page was loading. They might use the Firebug "inspect" feature, causing Firebug
 to display the HTML element under the mouse. They see that the element has a
 \textit{style} attribute setting the color green. While hovering over the green
 block of text, the developer clicks down to lock the user interface on the
-element, then moves to the HTML panel in Firebug and right clicks on the
+element, then moves to the HTML panel in Firebug and right-clicks on the
 selected HTML element representation. A menu pops up allowing the developer to
 select "Break On Attribute Change". When the developer reloads the page, Firebug
 halts in the JavaScript code panel, on the line where the attribute is changed
@@ -59,44 +59,8 @@ from red to green.
 This example illustrates that we will need to synchronize mouse events on the
 Web page with the debugger UI, identify HTML element representations rendered in
 the debugger UI with the elements in the Web page and synchronize DOM mutation
-event handling wit JavaScript execution.
-
-
-(Refactoring timeline)
-Web Applications continue to grow in size and complexity. The
-emergence of common toolkits and libraries for Javascript along with performance
-increases in Web Browsers fuels growth in client-side Web application
-development. As more functionality shifts from server- to client-side, the size
-of Javascript codebases naturally increases. Unfortunately for developers, the
-tools to develop, manage, and debug larger codebases have not followed the
-applications into the Web application development space.
-
-Sophisticated development tools become crucial for understanding
-and working with larger codebases. Compilers, debuggers, and other tools are
-often combined to create an Integrated Development Environment (IDE) where
-most, if not all, development tasks can be performed. Web development tools, on
-the other hand, often reside in the Web Browser. In 2011, most Web
-browsers ship with some kind of Web development tools included\cite{something},
-and still more are available as plugins or add-ons. These tools operate
-directly on the runtime Web application that is loaded into the browser, and do
-not retain any knowledge of or connection to the original source code. Therefore
-a developer must manually apply any changes made in one of these tools to his or
-her source code.
-
-This class of built-in Web development tools allow for a powerful set of
-features.  However, several weaknesses.
-
-Tools such as ``Inspectors'' and Firebug's HTML Breakpoints\cite{jjb-www2010}
-enable developers to quickly locate the section of code they are interested in.
-
-The rise of Mobile and Tablet computers which ship with fully functional Web
-browsers means that Web application developers have additional form-factors to
-consider.
-
-Tools such as ``Inspectors'' and Firebug's HTML Breakpoints\cite{jjb-www2010}
-enable developers to quickly locate the section of code they are interested in.
-
-Crossfire is designed to support the features available in current built-in
+event handling wit JavaScript execution. 
+Crossfire is designed to support the kinds of features available in current built-in
 development tools such as Firebug, while enabling the advantages of a remote
 debug connection.
 
