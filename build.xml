@@ -8,8 +8,16 @@
     <taskdef name="latex" classname="de.dokutransdata.antlatex.LaTeX"
           classpath="lib/ant_latex_0.0.9_1.jar"/>
 
-    <target name="pdf" depends="clean,prepare">
+    <taskdef name="bibtex"
+        classname="de.dokutransdata.antlatex.BibTeXTask"
+        classpath="lib/ant_latex_0.0.9_1.jar"/>
 
+    <target name="pdf" depends="clean,prepare,bibtex,figures,latex">
+        <copy file="${build.dir}/${ant.project.name}.pdf"
+                   tofile="${ant.project.name}.pdf"/>
+    </target>
+
+    <target name="latex">
         <latex
             latexfile="${ltx2.file}"
             verbose="on"
@@ -18,9 +26,25 @@
             workingDir="${build.dir}"
             outputDir="${basedir}"
           />
+    </target>
 
-        <copy file="${build.dir}/${ant.project.name}.pdf"
-                   tofile="${ant.project.name}.pdf"/>
+    <target name="figures" depends="prepare">
+        <copy todir="${build.dir}/figures">
+            <fileset dir="${basedir}/figures" includes="*.png,*.jpg,*.gif"/>
+        </copy>
+        <antcall target="latex"/>
+    </target>
+
+    <target name="bibtex">
+      <antcall target="latex"/>
+      <bibtex
+            workingDir="${build.dir}"
+            terse="true"
+      >
+        <fileset dir="${build.dir}">
+          <include name="*.aux"/>
+        </fileset>
+      </bibtex>
     </target>
 
     <target name="prepare">
@@ -29,9 +53,6 @@
                <fileset dir="${basedir}" includes="${cls.file}"/>
                <fileset dir="${basedir}" includes="*.bib"/>
                <fileset dir="${basedir}" includes="*.tex"/>
-        </copy>
-        <copy todir="${build.dir}/figures">
-            <fileset dir="${basedir}/figures" includes="*.png,*.jpg,*.gif"/>
         </copy>
     </target>
 

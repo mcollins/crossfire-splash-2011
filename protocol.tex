@@ -41,16 +41,42 @@ character (CRLF).
 The blank line should be followed by a well-formed JSON string, and terminated
 by another CRLF. The message must contain a ``type'' field with the value one of
 ``request'', ``response'', or ``event'', and a ``seq'' field which contains the
-sequence number of the packet.
+sequence number of the packet. The sequence number of each message must always
+be greater than that of the last message received.
 
-Example:
-TODO example packet
-
+%\begin{figure}[htp]
+%  \includegraphics  [width = 86 mm] {figures/crossfire-example-packet.png}
+%  \caption{An example of a Crossfire message packet.}
+% \label{fig:crossfire-packet}
+%\end{figure}
+% \texttt{
+% Content-Length:219
+% \\r\\n\\r\\n
+% {
+%   "type":"request",
+%   "command":"setbreakpoint",
+%   "context_id":"http://localhost:8080/test.html",
+%   "seq":21,
+%   "arguments": {
+%                  "position":0,
+%                  "enabled":true,
+%                  "target":"http://localhost:8080/test/some_javascript.js",
+%                  "line":9,
+%                  "ignoreCount":0,
+%                  "type":"line"
+%                }
+% }
+%\\r\\n
+%}
 \subsection {Client/Server Behavior}
 Once a connection has been established and a successful handshake is completed,
 the server may begin sending events to the connected client using the same TCP
 connection used for the handshake. A client may also begin sending requests to
-the server using the same connection.
+the server using the same connection. Clients should not expect the server to
+respond synchronously to requests or in order. The most common example is a
+Crossfire server sending one or more events to the client before responding to a
+client's request, because the events occurred during the time the request was
+being sent or processed.
 
 \subsection {Extensibility}
 One of the goals of Crossfire is to support remote and multi-process versions of
@@ -69,18 +95,64 @@ to architectural changes in future versions of Firebug.
 One consequence of this design choice is that the set of possible commands or
 event names cannot be specified definitively by the protocol. A Crossfire
 client or server must therefore be able to accept and respond to any well-formed
-message packet, even if it may not how to handle a particular command or event
-type.
+message packet, even if it may not know how to handle a particular command or
+event type.
 
 \subsection {Contexts}
-Firebug represents an instance of a Web page being debugged and shares
-information about the page via an object called a \textit{Context}.
+Firebug represents an instance of a Web page via an object called a
+\textit{Context}. The context object allows Firebug's panels and modules to
+share information about a web page that is being debugged, therefore it has a
+central role in Firebug's architecture. The Crossfire protocol uses contexts for
+most requests / events. Crossfire represents a context as a mapping of the
+unique context ID and the URL of the page. This allows a connected Crossfire
+client to distinguish between separate loads of the same URL, as is often the
+case when a developer reloads a page several times in the course of developing
+or debugging the page.
+Firebug's TabWatcher component monitors loading and unloading of Firefox windows
+and tabs.  The Crossfire server assigns a unique identifier to each
+context, and passes this ID as part of most event and response packets.
+
+\subsection {Context-specific events and requests}
+Most of the events that occur in a Web browser that are of interest to a debug
+UI are related to a single page. Examples of context-specific events include
+loading (or reloading) of a page, loading and compiling a script, errors being
+generated from an executing script, DOM elements being added or modified, a
+breakpoint being added to a script, etc.
 
 \subsection {Breakpoints}
 Breakpoint debugging is a standard tool for debugging software at runtime in
 many languages and environments. The Web Browser environment creates several
 challenges for designing a remote protocol which supports breakpoint debugging.
 Firebug also introduces several types of breakpoints which are not present in
-other environments \cite{jjb-www2010}
+other environments \cite{jjb-www2010}.
 
-\subsection {Context-specific data}
+Even the simplest case, a JavaScript line breakpoint, has design implications
+that must be considered. Typically, such a breakpoint is identified by a line
+number and the URL of the script. However, existing JavaScript debugging APIs
+such as Firefox's do not contain the concept of Firebug's contexts.  Therefore
+if a user places a breakpoint on line 23 of a URL http://localhost/script.js,
+then that breakpoint will exist for all occurrences of that URL. This may or may
+not be what the user actually desires.  Considering the increasing use of
+JavaScript libraries, it is entirely likely that a script from the same URL is
+loaded into two completely unrelated pages. It is conceivable that a user would
+wish to debug his or her code and the interaction with the library, without
+affecting code running in another tab or window.
+
+Crossfire's breakpoint protocol allows breakpoints to be set in one of two ways,
+either with or without a context ID. If a Crossfire client specifies a context
+ID along with a request to set a breakpoint, then that breakpoint should be
+enabled only for that context, or a future context which is created with the
+same URL in the same container (i.e. the page is reloaded).
+
+If a client does not specify a context (by passing null as the value of the
+context ID), then the behavior defaults to setting a breakpoint for the
+specified location across all contexts, current and future.
+
+More advanced breakpoints, such as the HTML element breakpoints, are supported
+by specifying that the \textit{location} property of a breakpoint in Crossfire
+is an arbitrary JSON object. A location object is defined depending on
+the type of breakpoint.  A JavaScript line breakpoint has a location object
+which consists of a target URL and line number. Firebug's HTML breakpoints have
+a location object which consists of an XPath expression that identifies the
+target element.  Eventually other location types may be added, e.g. to support
+network-related breakpoints such as Firebug's \textit{BreakOnXHR} feature.
