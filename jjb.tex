@@ -99,12 +99,12 @@ provide intermediate value to users and/or contributors.
 
 \subsection{Inter-application JavaScript Debugging}
 The first intemediate state for \textit{Crossfire} is shown in Fig.\ref{fig:fireclipse}.  
-\begin{figure*}
+\begin{figure}[htp]
   \includegraphics  [width = 86 mm] {figures/fireclipse.png}
   \caption{Inter-application JavaScript Debugging \textit{Crossfire} architecture. 
 \textit{Crossfire} versions 0.1 to 0.3 connected to an Eclipse plugin, supporting simple JavaScript debugging}
  \label{fig:fireclipse}
-\end{figure*}
+\end{figure}
 In Firefox we implemented a \textit{Crossfire} server limited to support for JavaScript debugging. 
 In Eclipse we implemented a \textit{Crossfire} client. This allows the user interface in Eclipse to control
  and examine the JavaScript program running
@@ -117,12 +117,12 @@ This work is largely complete.
 \subsection{Intra-browser JavaScript Debugging}
 The second intermediate state implements the client side of the JavaScript part of \textit{Crossfire} in 
 a Web browser as sketched in Fig.~\ref{fig:fbugChrome}. 
-\begin{figure*}
+\begin{figure}[htp]
   \includegraphics  [width = 86 mm] {figures/fbugChrome.png}
   \caption{Intra-browser JavaScript Debugging \textit{Crossfire} architecture. 
 \textit{Crossfire} versions 0.4 targets supporting simple JavaScript debugging with the client and server in the same application.}
  \label{fig:fbugChrome}
-\end{figure*}
+\end{figure}
 While this diagram seems a bit bizarre, with the 
 debugger running in and connecting back into the the same browser, this step allows us to add JavaScript debug
 support to the Firebug Lite implementation in the Google Chrome browser while we simultaneuously refactor 
@@ -143,11 +143,11 @@ This work is scheduled to complete in June, 2011.
 \subsection{Cross-browser Debugging}
 The final stage completes the tranformation of an in-process single browser Web page debugger to a client-server 
 cross-browser tool as shown in Fig.~\ref{fig:crossbrowser}.  
-\begin{figure*}
+\begin{figure}[htp]
   \includegraphics  [width = 86 mm] {figures/crossbrowser.png}
   \caption{Cross-browser Debugging architecture, proposed.}
  \label{fig:crossbrowser}
-\end{figure*}
+\end{figure}
 Conceptually we simply re-apply the approach ironed out in the previous step to the rest of the 
 program and arrive at the complete value proposed at the outset. In practice, the concept hides a lot of work. Lots of lines of code 
 must be carefully divide into two piles and the whole must get working again. This work is scheduled to complete in Dec. 2011.
