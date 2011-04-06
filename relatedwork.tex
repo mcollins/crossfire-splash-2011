@@ -9,21 +9,27 @@ Opera's DragonFly, Internet Explorer's Developer Tools, Google Chrome's Dev
 Tools and WebKit's Web Inspector.
 
 \subsubsection{Weinre}
-The Weinre (Web Inspector Remote)\cite{wenire} project implements a debugger for
+The Weinre (Web Inspector Remote)\cite{weinre} project implements a debugger for
 web pages that is designed to work remotely, reusing the user interface code
-from WebKit's Web Inspector.
+from WebKit's Web Inspector. The project was an experiment to get the Web
+Inspector interface to run in a Web page, much like Firebug Lite. Since Weinre
+supports remote inspection, and not JavaScript debugging, it could also be complimentary
+to our Crossfire work.
 
-\subsubsection{Eclipse JSDI}
+\subsubsection{Eclipse JSDT}
+
 \subsubsection{Orion}
+
 \subsection{Remote Protocols}
 Many protocols have already been designed for the purposes of remotely debugging
 an application running in another process, virtual machine, host, etc. The GNU
 GDB debugger has an associated Remote Serial Protocol (RSP)\cite{gdb-rsp}. While
 it is the only debugger we know of with its own song \cite{gdb-song}, it is
-primarily designed for debugging code running on embedded systems, and would not be
-well-suited for use with Firebug.
-\subsubsection{JNDI/JDWP}
-Java does remote debugging too.
+primarily designed for debugging code running on embedded systems, and would not
+be well-suited for use with Firebug. The Java Debug Wire Protocol (JDWP)
+\cite{jdwp} provides remote debugging of Java Virtual Machines. The protocol
+supports command and response message pairs similar to Crossfire and other Web
+debugging protocols, however the design of the protocol
 \subsubsection{DBGp}
 DBGp\cite{dbgp}, is an acronym for Debug Protocol, and was developed for version
 2 of the XDebug debugger for the PHP language. Although it was designed not to
@@ -31,12 +37,25 @@ be language specific, many of the commands are intended to be synchronous, as
 opposed to the asynchronous nature of Crossfire. DBGp also allows for the
 debugger engine to send an event to a client via the 'notification' element,
 with a custom body. However in order to support Firebug, we would need to define
-the same events defined by Crossfire as DBGp notifications.
+the same events defined by Crossfire as DBGp notifications, essentially creating
+another protocol within the protocol.
+
 \subsubsection{Opera Scope Protocol}
-The Opera browser has a built-in Web development tool called DragonFly,
-which also supports the Scope remote debug protocol. The Scope protocol supports
-XML and JSON formats, and features such as JavaScript debugging and remote DOM
-inspection.
-\subsection{Web Inspector Protocol}
-\cite{opera-scope}
+The Opera browser has a built-in Web development tool called DragonFly, which
+also supports the Scope remote debug protocol. The Scope
+protocol\cite{opera-scope} supports XML and JSON formats, and features such as
+JavaScript debugging and remote DOM inspection. It is used to allow the desktop
+DragonFly client to connect to another Opera browser instance, including mobile
+versions.
+
+\subsubsection{V8 / Chrome Dev Tools Protocol}
+The V8 protocol\cite{v8} is a JSON-based wire protocol for debugging JavaScript
+programs running within the V8 engine. The Chrome Dev Tools
+protocol\cite{chrome-dev-tools} wraps the V8 protocol to provide the additional
+information needed to debug a Web page running within Google's Chrome browser.
+The protocol implements JSON messages over TCP/IP sockets, and was the basis for
+much of the initial work on the Crossfire protocol. However, over the course of
+developing Crossfire and refactoring of Firebug, it was realized that Crossfire
+would require more functionality than the Chrome protocols provided.
+
 
