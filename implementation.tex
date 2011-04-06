@@ -16,6 +16,10 @@ operation allows external tools to launch Firefox and start the Crossfire server
 listening on a known port so that the external tool may automatically connect
 back to it. Figure \ref{fig:crossfire-arch}
 
+In order to support Firebug's ability to operate both in-process and
+out-of-process, an asynchronous API which we called BrowserToolsInterface was
+put in place to broker calls between Firebug's front- and back-end pieces.
+
 \subsection{Crossfire Tools API}
 The Crossfire extension also implements an API, called the ``Crossfire Tools
 API'' which enables extensibility of the Crossfire system and protocol. Firebug

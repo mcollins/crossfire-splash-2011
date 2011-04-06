@@ -1,48 +1,59 @@
 \section {Protocol}
 \subsection {Overview}
-The CrossFire protocol is an asynchronous, bi-directional protocol designed to
+The Crossfire protocol is an asynchronous, bi-directional protocol designed to
 enable the full functionality of the Firebug debugger in a multi-process or
 remote scenario. Where it was possible, the design of the protocol took cues
-from existing debug protocols () , as well as common Web technologies (e.g.
-HTTP\cite{http}, JSON\cite{json}). However certain features unique to Firebug
-and to debugging code running inside a Web Browser must be taken into account in
-the design of the protocol.
+from existing debug protocols such as DBGP\cite{dbgp}, Opera
+Scope\cite{opera-scope}, Google's Chrome Dev Tools\cite{chrome-dev-tools} , as
+well as common Web technologies (e.g. HTTP\cite{http}, JSON\cite{json}). Certain
+features unique to Firebug and to debugging code running inside a Web Browser
+had to be taqken into account in the design of the protocol.
+
+Debugging the code that implements a Web page or Web application differs in some
+significant ways from debugging applications developed for other systems.
+HTML and CSS are used to declaratively specify the structure and style of the
+user-interface, which is rendered by the Web browser. Developers cannot (easily)
+debug the rendering code itself. Instead, built-in tools like Firebug allow the
+developers to interact with the rendering engine by modifying the input and
+observing the output in real time, via live CSS and DOM editing. JavaScript code
+on the page can be stepped through when it is executing, however there is no
+guarantee that any JavaScript code is necessarily running at any given moment.
+JavaScript code on a Web page can be triggered by timers, user interactions or
+network events. There is no outermost main or idle loop to return to; when a
+section of JavaScript code is finished executing, control returns to the Web
+browser. This confounds attempts at things such as a simple 'halt' command,
+which is common among debuggers for other systems. The closest analog in Firebug
+is the \textit{break-on-next} feature.
+
+The Crossfire protocol is heavily event-driven, and requests made via Crossfire
+are asynchronous. This differs from many other debug protocols which are often
+synchronous or a combination of synchronous and asynchronous calls.  The reasons
+for this decision stem from the nature of code running in a web page, and the
+fact that in some scenarios, especially the intermediate scenarios we wished to
+acheive, we would have a remote client connected to a server which also had a
+co-resident debug UI (Firebug). In other words, a complete Firebug and Crossfire
+server implementation would be running in a single Firefox process, and clients
+could connect to the Crossfire server. The result of this scenario is that
+clients cannot assume or rely on being the only agent acting on the runtime
+engine. For instance, a Crossfire client cannot safely assume that the debugger
+will remain suspended on a line of code until the client issues a request to
+resume. It is also possible that this action was triggered by the user from
+another client (in this case it is helpful to think of Firebug's in-process UI
+as another client to the debugger). However any connected Crossfire client will
+receive an event whenever the JavaScript debugger suspends or resumes, and
+should react accordingly.
 
 Implementations of the protocol differ based on whether the implementation is
-intended to operate as a client or server. A CrossFire server resides in or is
+intended to operate as a client or server. A Crossfire server resides in or is
 connected to the process which is acting as the runtime platform for the Web
 page, application, or other code which is to be debugged. This is typically a
 Web Browser, although supporting other runtime environments is envisioned. A
-CrossFire client connects to a server in order to receive events and issue
+Crossfire client connects to a server in order to receive events and issue
 requests, typically in order to provide a user-interface
 for debugging, (e.g. GUI or command-line debugger). It is not necessary for the
 client and server to reside in the same process or even the same host machine.
 
-\subsection {Connection and Handshake}
-CrossFire does not specify a standard or well-known port. Port agreement is left
-up to the user, or the client software must start the server listening on
-the same port it will attempt to connect to.
 
-The CrossFire server listens for a TCP connection on the specified port
-(greater than 1024).  A client wishing to connect sends the string
-``CrossfireHandshake'' followed by a CRLF. The server replies with the same
-string, at which point the connection is established and the client may begin
-sending requests and receiving events from the server.
-
-\subsection {Message Packets}
-A well-formed CrossFire packet contains one or more headers consisting of the
-header name, followed by a colon (``:``), the header value, and terminated by a
-CRLF. A ``Content-Length'' header containing the number of characters in the
-message body is required.
-
-The message body is separated from the headers by a blank line
-represented by a carriage-return character followed by a line-feed
-character (CRLF).
-The blank line should be followed by a well-formed JSON string, and terminated
-by another CRLF. The message must contain a ``type'' field with the value one of
-``request'', ``response'', or ``event'', and a ``seq'' field which contains the
-sequence number of the packet. The sequence number of each message must always
-be greater than that of the last message received.
 
 %\begin{figure}[htp]
 %  \includegraphics  [width = 86 mm] {figures/crossfire-example-packet.png}
@@ -97,6 +108,32 @@ event names cannot be specified definitively by the protocol. A Crossfire
 client or server must therefore be able to accept and respond to any well-formed
 message packet, even if it may not know how to handle a particular command or
 event type.
+
+\subsection {Connection and Handshake}
+Crossfire does not specify a standard or well-known port. Port agreement is left
+up to the user, or the client software must start the server listening on
+the same port it will attempt to connect to.
+
+The Crossfire server listens for a TCP connection on the specified port
+(greater than 1024).  A client wishing to connect sends the string
+``CrossfireHandshake'' followed by a CRLF. The server replies with the same
+string, at which point the connection is established and the client may begin
+sending requests and receiving events from the server.
+
+\subsection {Message Packets}
+A well-formed Crossfire packet contains one or more headers consisting of the
+header name, followed by a colon (``:``), the header value, and terminated by a
+CRLF. A ``Content-Length'' header containing the number of characters in the
+message body is required.
+
+The message body is separated from the headers by a blank line
+represented by a carriage-return character followed by a line-feed
+character (CRLF).
+The blank line should be followed by a well-formed JSON string, and terminated
+by another CRLF. The message must contain a ``type'' field with the value one of
+``request'', ``response'', or ``event'', and a ``seq'' field which contains the
+sequence number of the packet. The sequence number of each message must always
+be greater than that of the last message received.
 
 \subsection {Contexts}
 Firebug represents an instance of a Web page via an object called a
