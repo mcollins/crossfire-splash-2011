@@ -2,8 +2,8 @@
 \section{Introduction}
 Web Applications continue to grow in size and complexity. Asynchronous
 background data download (AJAX) started the surge. This led to the emergence of
-common toolkits and libraries for Javascript which drove  performance increases
-in Web Browsers fueling more growth in client-side Web application development.
+common toolkits and libraries for JavaScript, which drove  performance increases
+in Web Browsers, fueling more growth in client-side Web application development.
 These improvements, combined with new features available in Web browsers shifted
 investment from server- to client-side. Recent empirical analysis of
 representative
@@ -11,9 +11,9 @@ representative
 sophisticated code.\cite{VitekDynamicJS2010}
 
 To develop and maintain these large applications, programmers and designers rely
-on numerous tools, most notably Web page debuggers. This paper describes a major
-re-architecting of the most widely used Web page debugger, Firebug, as a
-client/server system and in particular the \textit{Crossfire} protocol designed
+on numerous tools, most notably Web page debuggers. This paper describes \textit{Crossfire},
+a project and protocol to provide a next generation platform for Web page debuggers and the major
+re-architecting of the most widely used Web page debugger, Firebug, to use \textit{Crossfire}
 to support its client-server communications. Our description focuses on
 practical, state-of-the-art issues in an on-going, fast-moving, open-source project. Thus
 we cover details of protocol important for implementation and issues of matching
@@ -35,12 +35,13 @@ could try out changes. The resulting tool became very popular with developers
 and contributing significantly to the growth in Web applications.
 
 The primary implementation of Firebug is a Firefox extensions, a supplemental
-software component that loads into the Firefox Web browser. A secondard
+software component that loads into the Firefox Web browser. A secondary
 implementation with fewer features and, in particular, limited support for
 JavaScript debugging, called Firebug Lite, works in multiple browsers. The
-success of Firebug lead to implemenations of Web Page debuggers in other
-browsers, including DragonFly for Opera, Web Inspector for Google Chrome and
-Apple Safari, and the developer tool in Microsoft Internet Explorer. Since 2007
+success of Firebug lead to implementations of Web Page debuggers in other
+browsers, including DragonFly for Opera\cite{DragonFly}, Web Inspector for Google Chrome and
+Apple Safari\cite{WebInspector}, and the developer tools in Microsoft Internet Explorer\cite{IETools}. 
+Since 2007
 Firebug has been developed as an open source project, with seven major releases.
 
 To give a flavor of the kinds of operations Firebug supports, we outline  an
