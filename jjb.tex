@@ -15,8 +15,8 @@ problems on one page from bringing down the entire application and it allows
 each page to use a different physical processor on modern multi-core computers
 \cite{GoogleChrome}.  Depending upon the Firefox browser plaform changes, a
 shift to multiprocess could render Firebug unusable. As a practical matter we
-could not wait to for the new platform to be available: with only a few full-time
-developers, and a commitment to continous
+could not wait to for the new platform to be available: with only two full-time
+developers plus a number of dedicated but part time contributors, and a commitment to continous
 compatibility with Firefox we had to begin work immediately to insure that our
 small resource could complete the transition in time to remain a viable project.
 Therefore we assumed that Firefox would adopt an architecture similar to Google
@@ -51,9 +51,7 @@ The benefit of cross-browser debugging comes at a steep cost for the project.
 Instead of one server and one client, we face at minimum one server for every
 browser. And for each server we have to deal with both the slight differences in
 browser implementation of standard Web APIs and potential large differences in
-how debuggers can connect to the browser. In addition this goal implies that the
-client and the communication protocol should be built from open web standards to
-maximize the reuse across servers.
+how debuggers can connect to the browser.
 
 Unlike commerical or pure research projects, an open source project like Firebug
 might balance the cost of
@@ -84,7 +82,9 @@ a better choice for the project: the JavaScript support for HTTP is much better
 than sockets and HTTP works better in practical remote scenarios through
 firewalls.  However we made the judgement that better socket support was coming
 in future\cite{WebSockets}, support was adequate now, and lowering cost on the
-Google Chrome server was important.
+Google Chrome server was important.  In addition our goals imply that the
+client and the communication protocol should be built from open web standards to
+maximize the reuse across servers.
 
 \section{Evolution not Revolution}
 In addition to motivating developers to contribute to \textit{Crossfire}, we also need to motivate users
@@ -111,7 +111,8 @@ In Eclipse we implemented a \textit{Crossfire} client. This allows the user inte
 in Firefox.  A closed-source version of the client shipped in IBM's Rational Application Developer product for two years,
 then the open source Eclipse team created a new implementation as part of it's JavaScript Developer
 Tools (JSDT) project\cite{JSDT}.  By working towards the Eclipse team goals of
-remote JavaScript debugging, this stage of the work provided valuable implementation experience and engagement with the Eclipse team.
+remote JavaScript debugging, this stage of the work provided valuable implementation 
+experience and engagement with the Eclipse team.
 This work is largely complete.
 
 \subsection{Intra-browser JavaScript Debugging}
@@ -129,15 +130,15 @@ support to the Firebug Lite implementation in the Google Chrome browser while we
 the Firefox  \textit{Crossfire} server to resemble the Google Chrome back end.
 
 The key reason this architecture makes sense is that a large part of the non-JavaScript parts of a Web page
-debugger uses standard Web APIs. Thus the code for Firebug Lite running as co-resident with a Web page,
-Firebug Lite running as a Google Chrome extension and the HTML/CSS/Console debug support code in Firebug
-for Firefox are all very similar.   Thus we add user value, support for JavaScript debugging within Firebug for Google Chrome,
-and move forward towards our goal.
+debugger uses standard Web APIs. That  means that three different applications, Firebug Lite running as co-resident with a Web page,
+Firebug Lite running as a Google Chrome extension,  and the HTML/CSS/Console debug support code in Firebug
+for Firefox can use identical code in different wrappers. By re-engineering our current somewhat divergent code
+to group the idential parts we reduce maintainence. By adding for JavaScript debugging using the newly platform-independent Firefox code to the Firebug for Google Chrome code we add user value: the beginnings of cross browser development. Both efforts contribute to our final goals.
 
 Furthermore, the two JavaScript-only \textit{Crossfire} servers, one for Firefox and one for Google Chrome, can support
 alternative clients. In particular, the Orion project, a Web based Web-development system, plans to support
 JavaScript debugging over \textit{Crossfire} on their editor user interface. In
-return that project is implementing a \textit{Crossfire} server for Internet Explorer, allowing us to cover more than 75% of the browser market with \textit{Crossfire} supported tools.
+return that project is implementing a \textit{Crossfire} server for Internet Explorer, allowing us to cover more than 75\% of the browser market with \textit{Crossfire} supported tools.
 This work is scheduled to complete in June, 2011.
 
 \subsection{Cross-browser Debugging}
