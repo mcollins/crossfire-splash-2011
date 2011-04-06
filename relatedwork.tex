@@ -25,11 +25,12 @@ Many protocols have already been designed for the purposes of remotely debugging
 an application running in another process, virtual machine, host, etc. The GNU
 GDB debugger has an associated Remote Serial Protocol (RSP)\cite{gdb-rsp}. While
 it is the only debugger we know of with its own song \cite{gdb-song}, it is
-primarily designed for debugging code running on embedded systems, and would not
-be well-suited for use with Firebug. The Java Debug Wire Protocol (JDWP)
+primarily designed for debugging native code, particularly on embedded
+systems, and would not be well-suited for use with Firebug. The Java Debug Wire Protocol (JDWP)
 \cite{jdwp} provides remote debugging of Java Virtual Machines. The protocol
 supports command and response message pairs similar to Crossfire and other Web
-debugging protocols, however the design of the protocol
+debugging protocols. However the design of the protocol, particularly the
+synchronous aspects, would not work well with Firebug's existing architecture.
 \subsubsection{DBGp}
 DBGp\cite{dbgp}, is an acronym for Debug Protocol, and was developed for version
 2 of the XDebug debugger for the PHP language. Although it was designed not to
