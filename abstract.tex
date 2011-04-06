@@ -1,7 +1,10 @@
 \begin{abstract}
-We present Crossfire, a protocol designed to enable remote debugging with the
-Firebug Web debugging tool, and an implementation of this tool as a Firefox
-extension. We also present an architecture in which the user interface of
-Firebug is separated from the back-end debugger into separate processes
-connected via the Crossfire protocol.
+We present \textit{Crossfire}, a protocol designed to enable debugging of
+Web pages in another process or machine. The protocol and its implementation abstract issues specific to any one
+Web browser, allowing a new generation of Open Web development tools to be implemented.  
+We discuss the major refactoring of the open source
+Firebug Web debugging tool to use \textit{Crossfire} and the interplay between 
+goals and resources that such an effort requires.
+In addition to the cross-browser focus of the protocol, we also discuss support for extensions which themselves will be 
+cross-browser and client-server.
 \end{abstract}
