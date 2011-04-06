@@ -1,10 +1,33 @@
 \section {Future Work}
 \subsection {Web Sockets}
-Implementations of the Web Sockets standard are beginning to appear in recent
-versions of several Web Browsers. Web Sockets allow a Web page to create a
-socket connection to another host.
+Implementations of the WebSocket API\cite{websocketapi} and
+protocol\cite{websocketprotocol} standard are beginning to appear in recent
+versions of several Web Browsers. The WebSocket API allows JavaScript code in a
+Web page to create a full-duplex socket connection to another host using a
+lightweight protocol. Using these API's, it may be possible in the future to
+provide a Firebug front-end (similar to Firebug Lite) and Crossfire client which
+do not rely on other browser-specific extension APIs.
 \subsection {Mobile Web Debugging}
+Mobile devices such as smart phones and tablet computers now include
+full-featured Web browsers. In contrast to Desktop browsers, which have
+been adding more tools for developers, mobile browsers do not have the built-in
+Web development tools. The intuitive reason for this lack of tools is that the
+form factors of these mobile devices do not lend themselves to software
+development tasks. In this scenario, the remote debugging solution may be the
+only viable alternative.
 
 \subsection {Multi-user Debugging}
-The architecture and system we have built thus far has been designed with a
-single user in mind, but is not restricted to that.
+The architecture and system we have built thus far has been implemented and
+demonstrated with a single user in mind, but is not restricted to that. Even in
+cases with a single user, there could be cases where it is desirable for a
+Crossfire server to support connections to multiple clients, such has connecting
+an external IDE while also using Firebug's in-browser UI.
+
+Though the default operating mode of our Crossfire server implementation is to
+accept incoming connections only on the loopback interface, it is possible to
+connect from a remote host. Since Crossfire should support multiple clients, it
+is conceivable that multiple users could use separate Crossfire clients
+connected to the same Web page instance to collaborate on developing or
+debugging that page. While it is beyond the original goals of the Crossfire
+project, it would be possible to build on the Crossfire work to add additional
+features to facilitate this kind of collaborative debugging.
