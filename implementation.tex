@@ -11,10 +11,12 @@ The extension can be started in client or server mode either from the Firefox
 user interface, or via command-line switches to Firefox. This latter mode of
 operation allows external tools to launch Firefox and start the Crossfire server
 listening on a known port so that the external tool may automatically connect
-back to it. Figure \ref{fig:crossfire-arch}
+back to it. 
 
 
 \subsection{Crossfire Tools API}
+To support extension, \textit{Crossfire} maintains a registry on both the client 
+and server side as show in Fig.~\ref{fig:crossfire-arch}.
 The Crossfire extension also implements an API, called the ``Crossfire Tools
 API'' which enables extensibility of the Crossfire system and protocol. Firebug
 features such as the Console, Inspector, and Net Panel, are implemented as tools
@@ -37,6 +39,7 @@ server-side component.
 
 \begin{figure}[htp]
   \includegraphics  [width = 86 mm] {figures/crossfire-arch4.png}
-  \caption{Crossfire Firefox Extension Architecture}
+  \caption{Crossfire Extension Architecture. The Crossfire Module running in both client and server
+load extension modules which register 'tools', one half in the Server Tools registry and the other half in the Client Tools registry. }
  \label{fig:crossfire-arch}
 \end{figure}
