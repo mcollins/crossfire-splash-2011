@@ -77,12 +77,12 @@ had existing servers, so they did not alter our choices. Opera had a server but
 no one on our open source team planned to work with Opera and the server itself
 was not open source making implementation more difficult.  Since Firebug is
 already written in JavaScript, JSON format is especially easy to work with and
-has good performance\cite{JSON}.  For the communications protocol, HTTP would be
+has good performance\cite{json}.  For the communications protocol, HTTP would be
 a better choice for the project: the JavaScript support for HTTP is much better
 than sockets and HTTP works better in practical remote scenarios through
 firewalls.  However we made the judgment that better socket support was coming
-in future\cite{WebSockets}, support was adequate now, and lowering cost on the
-Google Chrome server was important.  In addition our goals imply that the
+in future\cite{websocketapi}, support was adequate now, and lowering cost on
+the Google Chrome server was important.  In addition our goals imply that the
 client and the communication protocol should be built from open web standards to
 maximize the reuse across servers.
 
@@ -110,8 +110,8 @@ In Eclipse we implemented a \textit{Crossfire} client. This allows the user inte
  and examine the JavaScript program running
 in Firefox.  A closed-source version of the client shipped in IBM's Rational Application Developer product for two years,
 then the open source Eclipse team created a new implementation as part of it's JavaScript Developer
-Tools (JSDT) project\cite{JSDT}.  By working towards the Eclipse team goals of
-remote JavaScript debugging, this stage of the work provided valuable implementation 
+Tools (JSDT) project\cite{EclipseJSDT}.  By working towards the Eclipse team
+goals of remote JavaScript debugging, this stage of the work provided valuable implementation
 experience and engagement with the Eclipse team.
 This work is largely complete.
 
@@ -161,10 +161,10 @@ Two such improvements are of particular interest: conversion of the source code 
 
 \paragraph{Modules} The original Firebug for Firefox and Firebug Lite code used HTML \texttt{<script>} tags to load and compile the source. This approach has two major drawbacks: 1) all of the top-level symbols in each file mix with the top-level symbols of any other files loaded in the same scope and 2) the load/compile steps are serialized. The first drawback never affected Firebug code because all of the files encapsulated their symbols in function scope. But the second one means that loading code always causes an upfront overhead to starting the application.
 
-A replacement for  \texttt{<script>} tag loading will need to support both client and server sides of a refactored Firebug and it must allow us to debug our own code.  As in other cases, we also want a solution that avoids additional work by the development team. The solution we adopted was \textit{RequireJS}\cite{requirejs}, a form of a module loader inspired by the CommonJS\cite{commonjs} open standards effort.  For the client side or Firebug Lite we can use this loader directly once we change our source to its format. For the server side we needed to implement code to read within the Firefox platform and support debugging. 
+A replacement for  \texttt{<script>} tag loading will need to support both client and server sides of a refactored Firebug and it must allow us to debug our own code.  As in other cases, we also want a solution that avoids additional work by the development team. The solution we adopted was \textit{RequireJS}\cite{requirejs}, a form of a module loader inspired by the CommonJS\cite{commonjs} open standards effort.  For the client side or Firebug Lite we can use this loader directly once we change our source to its format. For the server side we needed to implement code to read within the Firefox platform and support debugging.
 
 \paragraph{Tools Interface}
-During the transformation from monolithic to client-server application, Firebug needs to operate in both modes. The obvious way to deal with this is to introduce a programming interface between the front and back ends. In Firebug for Firefox, the interface functions call the back end directly; in the intermediate and initial releases of the cross-browser version these functions call the \textit{Crossfire} client API.  Similarly in the back end, the multiprocess versions of the interface call the \textit{Crossfire} server.  Notice that this interface becomes a natural programming layer for interaction between parts of the debugger. 
+During the transformation from monolithic to client-server application, Firebug needs to operate in both modes. The obvious way to deal with this is to introduce a programming interface between the front and back ends. In Firebug for Firefox, the interface functions call the back end directly; in the intermediate and initial releases of the cross-browser version these functions call the \textit{Crossfire} client API.  Similarly in the back end, the multiprocess versions of the interface call the \textit{Crossfire} server.  Notice that this interface becomes a natural programming layer for interaction between parts of the debugger.
 Since \textit{Crossfire} is designed to be cross-browser, with some care in the design, the programming interface we create becomes a general purpose Tools Interface for open Web development.
 
 The module and Tools Interface infrastructures complement one another. Each logical chunk of the Tools Interface corresponds to the exported symbols from one of the modules and the conditional assembly of the application from modules, to become either in-process or client-server, works by using the module loader to select the appropriate implementations of the interface.
