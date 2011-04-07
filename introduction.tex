@@ -11,14 +11,15 @@ representative
 sophisticated code.\cite{VitekDynamicJS2010}
 
 To develop and maintain these large applications, programmers and designers rely
-on numerous tools, most notably Web page debuggers. This paper describes \textit{Crossfire},
-a project and protocol to provide a next generation platform for Web page debuggers and the major
-re-architecting of the most widely used Web page debugger, Firebug, to use \textit{Crossfire}
-to support its client-server communications. Our description focuses on
-practical, state-of-the-art issues in an on-going, fast-moving, open-source project. Thus
-we cover details of protocol important for implementation and issues of matching
-resources to goals important for project management: we must deal with both
-low and high level issues to succeed.
+on numerous tools, most notably Web page debuggers. This paper describes
+\textit{Crossfire}, a protocol and implementation to provide a next generation
+platform for Web page debuggers and the major re-architecting of the most widely used Web
+page debugger, Firebug, to use \textit{Crossfire} to support its client-server
+communications. Our description focuses on practical, state-of-the-art issues in
+an on-going, fast-moving, open-source project. Thus we cover details of protocol
+important for implementation and issues of matching resources to goals important
+for project management: we must deal with both low and high level issues to
+succeed.
 
 \section{Background}
 To understand the importance and challenges of the \textit{Crossfire} work we
@@ -40,9 +41,9 @@ implementation with fewer features and, in particular, limited support for
 JavaScript debugging, called Firebug Lite, works in multiple browsers. The
 success of Firebug lead to implementations of Web Page debuggers in other
 browsers, including DragonFly for Opera\cite{opera-dragonfly}, Web Inspector for
-Google Chrome and Apple Safari\cite{WebInspector}, and the developer tools in Microsoft Internet Explorer\cite{IETools}.
-Since 2007
-Firebug has been developed as an open source project, with seven major releases.
+Google Chrome and Apple Safari\cite{WebInspector}, and the developer tools in
+Microsoft Internet Explorer\cite{IETools}. Since 2007 Firebug has been developed
+as an open source project, with seven major releases.
 
 To give a flavor of the kinds of operations Firebug supports, we outline  an
 example more completely described in Ref.\cite{jjb-www2010}. Suppose a developer
