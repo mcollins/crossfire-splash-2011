@@ -1,18 +1,18 @@
 
 \section{Related Work}
 \subsection{Multiprocess Web Debug Tools}
-As we discussed above, 
-Opera's DragonFly\cite{dragonfly} implements a complete remote debug solution and 
-Google Chrome's Web Inspector works across processes. These implementations are specific to their host browser.
+As we discussed above,
+Opera's DragonFly\cite{opera-dragonfly} implements a complete remote debug
+solution and Google Chrome's Web Inspector works across processes. These implementations are specific to their host browser.
 
 
 \subsubsection{Weinre}
-The Weinre (Web Inspector Remote)\cite{weinre} project implements a partial Web page debugger (no JavaScript debugging) by 
-adding JavaScript code to a Web page in a proxy server much like Firebug Lite. The 
+The Weinre (Web Inspector Remote)\cite{weinre} project implements a partial Web page debugger (no JavaScript debugging) by
+adding JavaScript code to a Web page in a proxy server much like Firebug Lite. The
 added code connects back to the proxy which then re-transmits to a third process running
 the user interface code
-from WebKit's Web Inspector. The main target for this work is mobile devices. If 
-a \textit{Crossfire} server were implemented in Weinre, the proxy could support connections to 
+from WebKit's Web Inspector. The main target for this work is mobile devices. If
+a \textit{Crossfire} server were implemented in Weinre, the proxy could support connections to
  \textit{Crossfire} clients.
 
 \subsubsection{Eclipse JSDT}
@@ -27,8 +27,8 @@ Web technologies, and plans to use Firebug and Crossfire as part of their
 debugging support. Discussions with the Orion team helped inform the design of \textit{Crossfire}.
 
 \subsubsection{Cloud 9 IDE}
-The Cloud 9 IDE\cite{cloud9} supports remote JavaScript debugging (only) from a Web page to Google's V8 
-engine running in a \texttt{Node.js} server. 
+The Cloud 9 IDE\cite{cloud9} supports remote JavaScript debugging (only) from a Web page to Google's V8
+engine running in a \texttt{Node.js} server.
 
 \subsection{Remote Protocols}
 Many protocols have already been designed for the purposes of remotely debugging
