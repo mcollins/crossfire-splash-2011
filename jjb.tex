@@ -3,7 +3,7 @@
 mobile debug, and open Web, cross-browser debugging.
 These closely related goals arose out of an interplay between user benefit and development costs.
 As an open source project we must work with development resources motivated by
-goals: no matter how much value Firebug users may recieve from a goal, the
+goals: no matter how much value Firebug users may receive from a goal, the
 selection must be limited by the motivation of open source contributors.
 
 Necessity motivated first \textit{Crossfire} design goal, multiprocess support.
@@ -16,11 +16,11 @@ each page to use a different physical processor on modern multi-core computers
 \cite{GoogleChrome}.  Depending upon the Firefox browser plaform changes, a
 shift to multiprocess could render Firebug unusable. As a practical matter we
 could not wait to for the new platform to be available: with only two full-time
-developers plus a number of dedicated but part time contributors, and a commitment to continous
+developers plus a number of dedicated but part time contributors, and a commitment to continuous
 compatibility with Firefox we had to begin work immediately to insure that our
 small resource could complete the transition in time to remain a viable project.
 Therefore we assumed that Firefox would adopt an architecture similar to Google
-Chrome: a client/server split debugger with a backend in one Web page process
+Chrome: a client/server split debugger with a back-end in one Web page process
 and a front end in another process.  We believe that this assumption is planning
 for the worst case: converting Firebug to client/server is a multi-person-year
 effort but very likely to work with what ever the Firefox team decides to do.
@@ -53,7 +53,7 @@ browser. And for each server we have to deal with both the slight differences in
 browser implementation of standard Web APIs and potential large differences in
 how debuggers can connect to the browser.
 
-Unlike commerical or pure research projects, an open source project like Firebug
+Unlike commercial or pure research projects, an open source project like Firebug
 might balance the cost of
 implementing cross-browser debugging support by attracting more contributors
 interested in this particular goal. That is, by adding this costly goal we can
@@ -80,7 +80,7 @@ already written in JavaScript, JSON format is especially easy to work with and
 has good performance\cite{JSON}.  For the communications protocol, HTTP would be
 a better choice for the project: the JavaScript support for HTTP is much better
 than sockets and HTTP works better in practical remote scenarios through
-firewalls.  However we made the judgement that better socket support was coming
+firewalls.  However we made the judgment that better socket support was coming
 in future\cite{WebSockets}, support was adequate now, and lowering cost on the
 Google Chrome server was important.  In addition our goals imply that the
 client and the communication protocol should be built from open web standards to
@@ -94,7 +94,7 @@ provides a large base of experienced Web developers working with a broad spectru
 An open source, working, state-of-the-art debugger motivates users to explain problems, create test cases,
 provide documentation and to help other users with problems that come up. To harness this
  unusual resource  for \textit{Crossfire} we need a plan for incremental refactoring of Firebug to be compatible
-with \textit{Crossfire}.  The refactoring plan needs to provide waypoints for the development and it needs to
+with \textit{Crossfire}.  The refactoring plan needs to provide way-points for the development and it needs to
 provide intermediate value to users and/or contributors.
 
 \subsection{Inter-application JavaScript Debugging}
@@ -126,14 +126,14 @@ a Web browser as sketched in Fig.~\ref{fig:fbugChrome}.
 \end{figure}
 While this diagram seems a bit bizarre, with the
 debugger running in and connecting back into the the same browser, this step allows us to add JavaScript debug
-support to the Firebug Lite implementation in the Google Chrome browser while we simultaneuously refactor
+support to the Firebug Lite implementation in the Google Chrome browser while we simultaneously refactor
 the Firefox  \textit{Crossfire} server to resemble the Google Chrome back end.
 
 The key reason this architecture makes sense is that a large part of the non-JavaScript parts of a Web page
 debugger uses standard Web APIs. That  means that three different applications, Firebug Lite running as co-resident with a Web page,
 Firebug Lite running as a Google Chrome extension,  and the HTML/CSS/Console debug support code in Firebug
 for Firefox can use identical code in different wrappers. By re-engineering our current somewhat divergent code
-to group the idential parts we reduce maintainence. By adding for JavaScript debugging using the newly platform-independent Firefox code to the Firebug for Google Chrome code we add user value: the beginnings of cross browser development. Both efforts contribute to our final goals.
+to group the identical parts we reduce maintainence. By adding for JavaScript debugging using the newly platform-independent Firefox code to the Firebug for Google Chrome code we add user value: the beginnings of cross browser development. Both efforts contribute to our final goals.
 
 Furthermore, the two JavaScript-only \textit{Crossfire} servers, one for Firefox and one for Google Chrome, can support
 alternative clients. In particular, the Orion project, a Web based Web-development system, plans to support
@@ -142,7 +142,7 @@ return that project is implementing a \textit{Crossfire} server for Internet Exp
 This work is scheduled to complete in June, 2011.
 
 \subsection{Cross-browser Debugging}
-The final stage completes the tranformation of an in-process single browser Web
+The final stage completes the transformation of an in-process single browser Web
 page debugger to a client-server cross-browser tool as shown in
 Fig.~\ref{fig:crossbrowser}. \begin{figure}[htp]
   \includegraphics  [width = 86 mm] {figures/crossbrowser.png}
@@ -164,7 +164,7 @@ Two such improvements are of particular interest: conversion of the source code 
 A replacement for  \texttt{<script>} tag loading will need to support both client and server sides of a refactored Firebug and it must allow us to debug our own code.  As in other cases, we also want a solution that avoids additional work by the development team. The solution we adopted was \textit{RequireJS}\cite{requirejs}, a form of a module loader inspired by the CommonJS\cite{commonjs} open standards effort.  For the client side or Firebug Lite we can use this loader directly once we change our source to its format. For the server side we needed to implement code to read within the Firefox platform and support debugging. 
 
 \paragraph{Tools Interface}
-During the transformation from monolithic to client-server application, Firebug needs to operate in both modes. The obvious way to deal with this is to introduce a programming interface between the front and back ends. In Firebug for Firefox, the interface functions call the back end directly; in the intermediate and initial releases of the crorss-browser version these functions call the \textit{Crossfire} client API.  Similarly in the back end, the multiprocess versions of the interface call the \textit{Crossfire} server.  Notice that this interface becomes a natural programming layer for interaction between parts of the debugger. 
+During the transformation from monolithic to client-server application, Firebug needs to operate in both modes. The obvious way to deal with this is to introduce a programming interface between the front and back ends. In Firebug for Firefox, the interface functions call the back end directly; in the intermediate and initial releases of the cross-browser version these functions call the \textit{Crossfire} client API.  Similarly in the back end, the multiprocess versions of the interface call the \textit{Crossfire} server.  Notice that this interface becomes a natural programming layer for interaction between parts of the debugger. 
 Since \textit{Crossfire} is designed to be cross-browser, with some care in the design, the programming interface we create becomes a general purpose Tools Interface for open Web development.
 
 The module and Tools Interface infrastructures complement one another. Each logical chunk of the Tools Interface corresponds to the exported symbols from one of the modules and the conditional assembly of the application from modules, to become either in-process or client-server, works by using the module loader to select the appropriate implementations of the interface.
