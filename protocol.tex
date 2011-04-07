@@ -7,7 +7,7 @@ from existing debug protocols such as DBGP\cite{dbgp}, Opera
 Scope\cite{opera-scope}, Google's Chrome Dev Tools\cite{chrome-dev-tools} , as
 well as common Web technologies (e.g. HTTP, JSON\cite{json}). Certain
 features unique to Firebug and to debugging code running inside a Web Browser
-had to be taqken into account in the design of the protocol.
+had to be taken into account in the design of the protocol.
 
 Debugging the code that implements a Web page or Web application differs in some
 significant ways from debugging applications developed for other systems.
@@ -30,7 +30,7 @@ are asynchronous. This differs from many other debug protocols which are often
 synchronous or a combination of synchronous and asynchronous calls.  The reasons
 for this decision stem from the nature of code running in a web page, and the
 fact that in some scenarios, especially the intermediate scenarios we wished to
-acheive, we would have a remote client connected to a server which also had a
+achieve, we would have a remote client connected to a server which also had a
 co-resident debug UI (Firebug). In other words, a complete Firebug and Crossfire
 server implementation would be running in a single Firefox process, and clients
 could connect to the Crossfire server. The result of this scenario is that

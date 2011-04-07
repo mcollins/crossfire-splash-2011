@@ -1,30 +1,34 @@
 
 \section{Related Work}
-\subsection{Web Development Tools}
-Tools for developing software to run in a Web browser fit broadly into two
-categories: external (to the
-browser) tools, and those that are built-in to the browser.
-Built-in tools include Firebug and Mozilla Firefox's developer tools,
-Opera's DragonFly, Internet Explorer's Developer Tools, Google Chrome's Dev
-Tools and WebKit's Web Inspector.
+\subsection{Multiprocess Web Debug Tools}
+As we discussed above, 
+Opera's DragonFly\cite{dragonfly} implements a complete remote debug solution and 
+Google Chrome's Web Inspector works across processes. These implementations are specific to their host browser.
+
 
 \subsubsection{Weinre}
-The Weinre (Web Inspector Remote)\cite{weinre} project implements a debugger for
-web pages that is designed to work remotely, reusing the user interface code
-from WebKit's Web Inspector. The project was an experiment to get the Web
-Inspector interface to run in a Web page, much like Firebug Lite. Since Weinre
-supports remote inspection, and not JavaScript debugging, it could also be complimentary
-to our Crossfire work.
+The Weinre (Web Inspector Remote)\cite{weinre} project implements a partial Web page debugger (no JavaScript debugging) by 
+adding JavaScript code to a Web page in a proxy server much like Firebug Lite. The 
+added code connects back to the proxy which then re-transmits to a third process running
+the user interface code
+from WebKit's Web Inspector. The main target for this work is mobile devices. If 
+a \textit{Crossfire} server were implemented in Weinre, the proxy could support connections to 
+ \textit{Crossfire} clients.
 
 \subsubsection{Eclipse JSDT}
 The Eclipse JavaScript Development Tools (JSDT) project\cite{EclipseJSDT}
-includes a Crossfire client implementation (currently in incubation) along with
-several other implementations for JavaScript debugging.
+includes a \textit{Crossfire} client implementation (currently in incubation).
+ This code is written in Java and supports
+connections to Firebug's server as well as an early implementation of \textit{Crossfire} in Internet Explorer.
 
 \subsubsection{Orion}
 The Orion project\cite{orion} aims to create Web development tooling based on
 Web technologies, and plans to use Firebug and Crossfire as part of their
-debugging support.
+debugging support. Discussions with the Orion team helped inform the design of \textit{Crossfire}.
+
+\subsubsection{Cloud 9 IDE}
+The Cloud 9 IDE\cite{cloud9} supports remote JavaScript debugging (only) from a Web page to Google's V8 
+engine running in a \texttt{Node.js} server. 
 
 \subsection{Remote Protocols}
 Many protocols have already been designed for the purposes of remotely debugging
@@ -37,6 +41,7 @@ systems, and would not be well-suited for use with Firebug. The Java Debug Wire 
 supports command and response message pairs similar to Crossfire and other Web
 debugging protocols. However the design of the protocol, particularly the
 synchronous aspects, would not work well with Firebug's existing architecture.
+
 \subsubsection{DBGp}
 DBGp\cite{dbgp}, is an acronym for Debug Protocol, and was developed for version
 2 of the XDebug debugger for the PHP language. Although it was designed not to
