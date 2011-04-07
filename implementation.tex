@@ -1,21 +1,22 @@
 \section{Implementation}
 
 \subsection{Crossfire Firefox Extension}
-The first implementation of the Crossfire protocol is an extension to Firefox and Firebug.
-Implemented entirely in JavaScript, it uses a modular design to allow us to share
-code between client and server implementations, as well as cross-browser
-implementations.The transport layer operates as either a Crossfire client or server; 
-both side can work over sockets,  HTTP, or (at least the early versions of) Web Sockets 
+The first implementation of the Crossfire protocol is an extension to Firefox
+and Firebug. Implemented entirely in JavaScript, it uses a modular design to
+allow us to share code between client and server implementations, as well as
+cross-browser implementations.The transport layer operates as either a Crossfire
+client or server; currently the transport operates over TCP sockets.
+Future support for operating over HTTP and/or WebSockets is planned.
 
 The extension can be started in client or server mode either from the Firefox
 user interface, or via command-line switches to Firefox. This latter mode of
 operation allows external tools to launch Firefox and start the Crossfire server
 listening on a known port so that the external tool may automatically connect
-back to it. 
+back to it.
 
 
 \subsection{Crossfire Tools API}
-To support extension, \textit{Crossfire} maintains a registry on both the client 
+To support extension, \textit{Crossfire} maintains a registry on both the client
 and server side as show in Fig.~\ref{fig:crossfire-arch}.
 The Crossfire extension also implements an API, called the ``Crossfire Tools
 API'' which enables extensibility of the Crossfire system and protocol. Firebug
