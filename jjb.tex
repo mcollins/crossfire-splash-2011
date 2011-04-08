@@ -85,11 +85,11 @@ JSON format is especially easy to work with and has good performance\cite{json}.
  For the communications protocol, HTTP would be a better choice for the project:
 the JavaScript support for HTTP is much better than sockets and HTTP works
 better in practical remote scenarios through firewalls.  However we made the
-judgment that better socket support was coming in future\cite{websocketapi},
-support was adequate now, and lowering cost on a Google Chrome back-end was
-important.  In addition our goals imply that the client and the communication
-protocol should be built from open Web standards to maximize the reuse across
-servers.
+judgment that better socket support was coming in the near
+future\cite{websocketapi}, support was adequate now, and lowering cost on a
+Google Chrome back-end was important.  In addition our goals imply that the
+client and the communication protocol should be built from open Web standards to
+maximize the reuse across servers.
 
 \section{Evolution not Revolution}
 In addition to motivating developers to contribute to \textit{Crossfire}, we
@@ -144,8 +144,8 @@ that three different applications, Firebug Lite running as co-resident with a
 Web page, Firebug Lite running as a Google Chrome extension,  and the
 HTML/CSS/Console debug support code in Firebug for Firefox can use identical
 code in different wrappers. By re-engineering our current somewhat divergent
-code to group the identical parts we reduce maintainence. By adding for
-JavaScript debugging using the newly platform-independent Firefox code to the
+code to group the identical parts we reduce maintainence. By adding
+JavaScript debugging using the now platform-independent Firefox code to the
 Firebug for Google Chrome code we add user value: the beginnings of cross
 browser development. Both efforts contribute to our final goals.
 
@@ -168,9 +168,9 @@ Fig.~\ref{fig:crossbrowser}. \begin{figure}[htp]
 \end{figure}
 Conceptually we simply re-apply the approach ironed out in the previous step to
 the rest of the program and arrive at the complete value proposed at the outset.
-In practice, the concept hides a lot of work. Lots of lines of code must be
-carefully divide into two piles and the whole must get working again. This work
-is scheduled to complete in Dec. 2011.
+In practice, the concept hides a lot of work. Many lines of code must be
+carefully divide into two piles and the whole must be made to work again. This
+work is scheduled to complete in Dec. 2011.
 
 \subsection{Modules and Tools Interface}
 In parallel with the architectural changes outlined above, we also need to make
