@@ -178,8 +178,8 @@ affecting code running in another tab or window.
 Crossfire's breakpoint protocol allows breakpoints to be set in one of two ways,
 either with or without a context ID. If a Crossfire client specifies a context
 ID along with a request to set a breakpoint, then that breakpoint should be
-enabled for any existing context, or a future context which is created with the
-same URL in the same container (i.e. the page is reloaded).
+enabled for that location in any existing context, or a future context which is
+created with the same URL in the same container (i.e. the page is reloaded).
 
 If a client does not specify a context (by passing null as the value of the
 context ID), then the behavior is to set a breakpoint for the specified location
