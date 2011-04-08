@@ -13,7 +13,8 @@ sophisticated code.\cite{VitekDynamicJS2010}
 To develop and maintain these large applications, programmers and designers rely
 on numerous tools, most notably Web page debuggers. This paper describes
 \textit{Crossfire}, a protocol and implementation to provide a next generation
-platform for Web page debuggers and the major re-architecting of the most widely used Web
+platform for Web page debuggers: support for cross-browser, remote and mobile 
+development tools. We describe the major re-architecting of the most widely used Web
 page debugger, Firebug, to use \textit{Crossfire} to support its client-server
 communications. Our description focuses on practical, state-of-the-art issues in
 an on-going, fast-moving, open-source project. Thus we cover details of protocol
@@ -39,7 +40,7 @@ The primary implementation of Firebug is a Firefox extension, a supplemental
 software component that loads into the Firefox Web browser. A secondary
 implementation with fewer features and, in particular, limited support for
 JavaScript debugging, called Firebug Lite, works in multiple browsers. The
-success of Firebug lead to implementations of Web Page debuggers in other
+success of Firebug triggered competitive implementations of Web Page debuggers in other
 browsers, including DragonFly for Opera\cite{opera-dragonfly}, Web Inspector for
 Google Chrome and Apple Safari\cite{WebInspector}, and the developer tools in
 Microsoft Internet Explorer\cite{IETools}. Since 2007 Firebug has been developed
@@ -48,8 +49,9 @@ as an open source project, with seven major releases.
 To give a flavor of the kinds of operations Firebug supports, we outline  an
 example more completely described in Ref.\cite{jjb-www2010}. Suppose a developer
 wants to understand why a block of text in the Web page turned green while the
-page was loading. They might use the Firebug "inspect" feature, causing Firebug
-to display the HTML element under the mouse. They see that the element has a
+page was loading. They might use the Firebug "inspect" feature, moving their mouse 
+cursor over the green text, causing Firebug
+to display the corresponding HTML element. They see that the element has a
 \textit{style} attribute setting the color green. While hovering over the green
 block of text, the developer clicks down to lock the user interface on the
 element, then moves to the HTML panel in Firebug and right-clicks on the
