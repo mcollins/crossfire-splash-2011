@@ -82,7 +82,7 @@ client and server to reside in the same process or even the same host machine.
 %\\r\\n
 %}
 \subsection {Connection and Handshake}
-To avoid conflicts with existing ports, 
+To avoid conflicts with existing ports,
 Crossfire does not specify a standard or well-known port. Port agreement is left
 up to the user, or the client software must start the server listening on
 the same port it will attempt to connect to.
@@ -123,12 +123,12 @@ be greater than that of the last message received.
 \subsection {Contexts}
 Unlike desktop or server application debuggers, a Web browser typically runs
 multiple applications or Web pages. A developer is likely to debug one or two of these applications,
-while the rest are unrelated to the application. The debugger must 
+while the rest are unrelated to the application. The debugger must
 have a mechanism to focus on the particular page being debugged.
 Firebug represents an instance of a Web page via an object called a
 \textit{Context}. The context object allows Firebug's panels and modules to
 share information about a web page that is being debugged, therefore it has a
-central role in Firebug's architecture. 
+central role in Firebug's architecture.
 
 Most of the events that occur in a Web browser that are of interest to a debug
 UI are related to individual pages, and therefore individual Firebug contexts.
@@ -185,7 +185,7 @@ the type of breakpoint.  A JavaScript line breakpoint has a location object
 which consists of a target URL and line number. Firebug's HTML breakpoints have
 a location object which consists of an XPath expression that identifies the
 target element.  Eventually other location types may be added, e.g. to support
-network-related breakpoints such as Firebug's \textit{BreakOnXHR} feature.
+network-related breakpoints such as Firebug's \textit{Break-On-XHR} feature.
 
 \subsection {Extensibility}
 One of the goals of Crossfire is to support remote and multi-process versions of
