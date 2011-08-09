@@ -29,7 +29,7 @@
                    tofile="${submission.id}.pdf"/>
     </target>
 
-    <!--target name="camera" depends="clean,prepare,figures,bibtex">
+    <target name="camera" depends="clean,prepare,figures">
         <exec executable="latex" dir="${build.dir}">
             <arg value="${ltx2.file}"/>
         </exec>
@@ -38,21 +38,21 @@
             <arg value="${submission.id}.ps"/>
             <arg value="${ant.project.name}.dvi"/>
         </exec>
-    </target-->
+    </target>
 
     <target name="latex">
-        <!--exec executable="latex" dir="${build.dir}">
+        <exec executable="latex" dir="${build.dir}">
             <arg value="${ltx2.file}"/>
-        </exec-->
+        </exec>
 
-        <latex
+        <!--latex
             latexfile="${ltx2.file}"
             verbose="on"
             clean="off"
             pdftex="on"
             workingDir="${build.dir}"
             outputDir="${basedir}"
-          />
+          /-->
     </target>
 
     <target name="figures" depends="prepare">
