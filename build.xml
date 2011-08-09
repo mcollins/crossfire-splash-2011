@@ -3,7 +3,9 @@
 
     <property name="ltx2.file" value="${basedir}/${ant.project.name}.tex"/>
     <property name="cls.file" value="sigplanconf.cls"/>
-    <property name="build.dir" value="build/"/>
+    <property name="build.dir" value="build"/>
+
+    <property name="submission.id" value="spex100-collins"/>
 
     <taskdef name="latex" classname="de.dokutransdata.antlatex.LaTeX"
           classpath="lib/ant_latex_0.0.9_1.jar"/>
@@ -13,15 +15,40 @@
         classpath="lib/ant_latex_0.0.9_1.jar"/>
 
     <target name="pdf" depends="clean,prepare,bibtex,figures,latex">
-        <copy file="${build.dir}/${ant.project.name}.pdf"
-                   tofile="${ant.project.name}.pdf"/>
-    </target>
-
-    <target name="latex">
         <latex
             latexfile="${ltx2.file}"
             verbose="on"
-            clean="on"
+            clean="off"
+            pdftex="on"
+            workingDir="${build.dir}"
+            outputDir="${basedir}"
+          />
+        <copy file="${build.dir}/${ant.project.name}.pdf"
+                   tofile="${ant.project.name}.pdf"/>
+        <copy file="${build.dir}/${ant.project.name}.pdf"
+                   tofile="${submission.id}.pdf"/>
+    </target>
+
+    <!--target name="camera" depends="clean,prepare,figures,bibtex">
+        <exec executable="latex" dir="${build.dir}">
+            <arg value="${ltx2.file}"/>
+        </exec>
+        <exec executable="dvips" dir="${build.dir}">
+            <arg value="-o"/>
+            <arg value="${submission.id}.ps"/>
+            <arg value="${ant.project.name}.dvi"/>
+        </exec>
+    </target-->
+
+    <target name="latex">
+        <!--exec executable="latex" dir="${build.dir}">
+            <arg value="${ltx2.file}"/>
+        </exec-->
+
+        <latex
+            latexfile="${ltx2.file}"
+            verbose="on"
+            clean="off"
             pdftex="on"
             workingDir="${build.dir}"
             outputDir="${basedir}"
@@ -30,7 +57,7 @@
 
     <target name="figures" depends="prepare">
         <copy todir="${build.dir}/figures">
-            <fileset dir="${basedir}/figures" includes="*.png,*.jpg,*.gif"/>
+            <fileset dir="${basedir}/figures" includes="*.eps,*.tif,*.png,*.jpg,*.gif"/>
         </copy>
         <antcall target="latex"/>
     </target>
@@ -58,5 +85,11 @@
 
     <target name="clean">
         <delete dir="${build.dir}"/>
+        <delete>
+            <fileset dir="${basedir}" includes="*.aux"/>
+            <fileset dir="${basedir}" includes="*.out"/>
+            <fileset dir="${basedir}" includes="*.log"/>
+            <fileset dir="${basedir}" includes="*.dvi"/>
+        </delete>
     </target>
 </project>
